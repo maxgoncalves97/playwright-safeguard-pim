@@ -12,7 +12,9 @@ export class PimPage {
   readonly saveButton: Locator;
   readonly savedEmployeeMessage: Locator;
   readonly mandatoryFieldRequired: Locator;
+  readonly employeeIdInput: Locator;
 
+  readonly employeeListButton: Locator;
   readonly searchName: Locator;
   readonly searchButton: Locator;
   readonly searchId: Locator;
@@ -29,10 +31,12 @@ export class PimPage {
     this.employeeLastName = page.getByRole('textbox', { name: 'Last Name' });
     this.saveButton = page.getByRole('button', { name: 'Save' });
     this.savedEmployeeMessage = page.getByText('Successfully saved');
-    this.mandatoryFieldRequired = page.getByText('Required', { exact: true })
+    this.mandatoryFieldRequired = page.getByText('Required', { exact: true });
+    this.employeeIdInput = page.locator('input.oxd-input--active').nth(3);
 
+    this.employeeListButton = page.getByRole('link', { name: 'Employee List' });
     this.searchName = page.locator("//div[@class='oxd-grid-4 orangehrm-full-width-grid']//div[1]//div[1]//div[2]//div[1]//div[1]//input[1]");
-    this.searchId = page.locator("//div[@class='oxd-input-group oxd-input-field-bottom-space']//div//input[@class='oxd-input oxd-input--active']");
+    this.searchId = page.locator('.oxd-form input').nth(1);
     this.searchButton = page.getByRole('button', { name: 'Search' });
   }
 
@@ -48,41 +52,55 @@ export class PimPage {
     await expect(this.photoReqs).toBeVisible();
   }
 
-  async addEmployeeFullName(firstName: string, middleName: string, lastName: string) {
-    await this.gotoAddEmployee();
-
+  async addEmployeeFullName(firstName: string, lastName: string) {
+    await expect(this.employeeFirstName).toBeVisible({ timeout: 10000 });
     await this.employeeFirstName.fill(firstName);
-    await this.employeeMiddleName.fill(middleName);
+    await expect(this.employeeFirstName).toHaveValue(firstName);
+
+    await expect(this.employeeLastName).toBeVisible({ timeout: 10000 });
     await this.employeeLastName.fill(lastName);
+    await expect(this.employeeLastName).toHaveValue(lastName);
+  }
+
+  async getEmployeeId() {
+    return await this.employeeIdInput.inputValue();
+  }
+
+  async saveCreatedEmployee() {
+    await expect(this.saveButton).toBeVisible({ timeout: 10000 });
+    await expect(this.saveButton).toBeEnabled();
+
     await this.saveButton.click();
+
+    await expect(this.page).toHaveURL(/viewPersonalDetails\/empNumber\/\d+/, {
+      timeout: 30000,
+    });
   }
 
   async successfulEmployeeCreation(firstName: string, lastName: string) {
-    await expect(this.page.getByRole('heading', { name: `${firstName} ${lastName}` })).toBeVisible();
+    const employeeHeaderName = this.page.locator('.orangehrm-edit-employee-name h6');
+
+    await expect(employeeHeaderName).toHaveText(`${firstName} ${lastName}`);
   }
 
   async fieldRequired() {
     await expect(this.mandatoryFieldRequired).toBeVisible();
   }
 
-  async searchEmployeeByName(employeeName: string, employeeFullName: string, employeeId: string) {
-    const employeeResult = this.page.getByText(employeeFullName);
+  async searchEmployeeByName(employeeName: string) {
     const resultFound = this.page.getByText('(1) Record Found', { exact: true });
-    const employeeIdNumber = this.page.getByText(employeeId);
 
+    await this.employeeListButton.click();
     await this.searchName.fill(employeeName);
-    await expect(employeeResult).toBeVisible();
-    await employeeResult.click();
     await this.searchButton.click();
     await expect(resultFound).toBeVisible();
-    await expect(employeeIdNumber).toBeVisible();
   }
 
   async searchEmployeeById(employeeId: string) {
     const resultFound = this.page.getByText('(1) Record Found', { exact: true });
     const employeeIdNumber = this.page.getByText(employeeId);
 
-
+    await this.employeeListButton.click();
     await this.searchId.fill(employeeId);
     await this.searchButton.click();
     await expect(resultFound).toBeVisible();
