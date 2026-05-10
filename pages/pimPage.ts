@@ -88,7 +88,7 @@ export class PimPage {
   }
 
   async searchEmployeeByName(employeeName: string) {
-    const resultFound = this.page.getByText('(1) Record Found', { exact: true });
+    const resultFound = this.page.getByText(/1.*Record Found/i);
 
     await this.employeeListButton.click();
     await this.searchName.fill(employeeName);
