@@ -5,5 +5,5 @@ test('Successful login', async ({ page }) => {
   const loginPage = new LoginOrangeHRM(page);
 
   await loginPage.loginHomepage(process.env.TEST_USERNAME!, process.env.TEST_PASSWORD!);
-  await loginPage.validLogin();
+  await loginPage.validLogin(process.env.TEST_DISPLAY_NAME!);
 });
