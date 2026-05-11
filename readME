@@ -1,0 +1,184 @@
+# Playwright Safeguard PIM Automation Suite
+
+UI and API automation framework built using Playwright and TypeScript against the OrangeHRM demo application.
+
+## Project Overview
+
+This framework automates several key user flows within the OrangeHRM PIM module, including:
+
+- User login validation
+- Employee creation
+- Employee search by name and/or ID
+- API endpoint validation
+
+The framework uses the Page Object Model (POM) design pattern to improve maintainability, readability, and separation of concerns.
+
+---
+
+## Tech Stack
+
+- Playwright
+- TypeScript
+- Node.js
+- GitHub Actions (CI pipeline)
+
+---
+
+## Project Structure
+
+```
+tests/                  # UI and API test specifications
+pages/                  # Page Object Models
+playwright.config.ts    # Global Playwright configuration
+.github/workflows/      # GitHub Actions CI pipeline
+```
+
+## Features Implemented
+
+### UI Automation
+#### Login
+- Successful login validation
+- Dashboard visibility validation
+
+### PIM Employee Management
+- Navigate to PIM module
+- Create a new employee
+- Validate employee creation
+- Search employee by name
+- Validate search results
+
+### API Automation
+#### Login Endpoint Validation
+- Validate successful API response from OrangeHRM login endpoint
+- Validate response status code
+- Validate returned HTML content
+- CSRF token handling for authenticated login flows
+
+## How To Build And Execute
+
+### 1. Clone the repository
+
+```bash
+git clone <repository-url>
+cd <repository-name>
+```
+
+---
+
+### 2. Install dependencies
+
+```bash
+npm install
+```
+
+---
+
+### 3. Install Playwright browsers
+
+```bash
+npx playwright install
+```
+
+---
+
+### 4. Create environment variables
+
+Create a `.env` file in the root directory:
+
+```env
+TEST_USERNAME=Admin
+TEST_PASSWORD=admin123
+```
+
+---
+
+### 5. Run all tests
+
+```bash
+npx playwright test
+```
+
+---
+
+### 6. Run tests in headed mode
+
+```bash
+npx playwright test --headed
+```
+
+---
+
+### 7. Run a specific test file
+
+```bash
+npx playwright test tests/create-and-search-employee.spec.ts
+```
+
+---
+
+### 8. Open Playwright report
+
+```bash
+npx playwright show-report
+```
+
+## Trade-offs / Improvements With More Time
+
+### Stability Improvements
+
+The OrangeHRM demo application is a shared public environment, which occasionally introduced test instability and inconsistent response times. To improve reliability within the shared public OrangeHRM demo environment, parallel execution was reduced and additional synchronization/assertions were introduced to minimise test flakiness.
+
+Given more time, I would improve stability further by:
+
+- Implementing API-driven test setup and cleanup
+- Using dedicated test data accounts
+- Adding better synchronization around loading states
+- Reducing dependency on public shared environment data
+
+---
+
+### API Automation Expansion
+
+The current API coverage focuses on validating the login endpoint response.
+
+With additional time, I would expand API coverage to include:
+
+- Authenticated API requests
+- Employee CRUD API testing
+- Token/session management
+- Request and response schema validation
+
+---
+
+### Reporting Improvements
+
+Additional reporting and debugging improvements could include:
+
+- Allure reporting integration
+- Enhanced trace analysis
+- Better screenshot/video capture handling
+- Centralized test logging
+
+---
+
+### CI/CD Improvements
+
+The current GitHub Actions pipeline executes the automated suite successfully.
+
+Further improvements could include:
+
+- Multi-browser execution
+- Scheduled nightly regression runs
+- Slack or Teams notifications
+- Parallel execution against a more stable environment
+
+---
+
+### Framework Improvements
+
+Additional framework enhancements could include:
+
+- Reusable test fixtures
+- Better environment configuration handling
+- Data factories for dynamic test generation
+- More reusable utility/helper methods

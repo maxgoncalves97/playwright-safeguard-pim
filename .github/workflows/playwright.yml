@@ -50,7 +50,7 @@ jobs:
       - name: Run login failure test
         run: npx playwright test tests/login-failure.spec.ts
 
-  search-employee:
+  add-and-search-employee:
     name: Search Employee Test
     runs-on: ubuntu-latest
 

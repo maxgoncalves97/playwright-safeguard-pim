@@ -43,21 +43,23 @@ export class PimPage {
   async gotoPIMPage() {
     await expect(this.pim).toBeVisible();
     await this.pim.click();
+    await expect(this.page).toHaveURL(/\/pim\/viewEmployeeList/);
     await expect(this.PIMHeader).toBeVisible();
   }
 
   async gotoAddEmployee() {
     await expect(this.addEmployeeButton).toBeVisible();
     await this.addEmployeeButton.click();
-    await expect(this.photoReqs).toBeVisible();
+    await expect(this.page).toHaveURL(/addEmployee/, {timeout: 15000});
+    await expect(this.employeeFirstName).toBeVisible();
   }
 
   async addEmployeeFullName(firstName: string, lastName: string) {
-    await expect(this.employeeFirstName).toBeVisible({ timeout: 10000 });
+    await expect(this.employeeFirstName).toBeVisible({ timeout: 15000 });
     await this.employeeFirstName.fill(firstName);
     await expect(this.employeeFirstName).toHaveValue(firstName);
 
-    await expect(this.employeeLastName).toBeVisible({ timeout: 10000 });
+    await expect(this.employeeLastName).toBeVisible({ timeout: 15000 });
     await this.employeeLastName.fill(lastName);
     await expect(this.employeeLastName).toHaveValue(lastName);
   }
@@ -67,20 +69,20 @@ export class PimPage {
   }
 
   async saveCreatedEmployee() {
-    await expect(this.saveButton).toBeVisible({ timeout: 10000 });
+    await expect(this.saveButton).toBeVisible({ timeout: 15000 });
     await expect(this.saveButton).toBeEnabled();
 
     await this.saveButton.click();
 
     await expect(this.page).toHaveURL(/viewPersonalDetails\/empNumber\/\d+/, {
-      timeout: 30000,
+      timeout: 20000,
     });
   }
 
   async successfulEmployeeCreation(firstName: string, lastName: string) {
     const employeeHeaderName = this.page.locator('.orangehrm-edit-employee-name h6');
 
-    await expect(employeeHeaderName).toHaveText(`${firstName} ${lastName}`);
+    await expect(employeeHeaderName).toHaveText(`${firstName} ${lastName}`, { timeout: 15000 });
   }
 
   async fieldRequired() {
@@ -103,7 +105,7 @@ export class PimPage {
     await this.employeeListButton.click();
     await this.searchId.fill(employeeId);
     await this.searchButton.click();
-    await expect(resultFound).toBeVisible();
+    await expect(resultFound).toBeVisible({ timeout: 15000 });
     await expect(employeeIdNumber).toBeVisible();
   }
 }

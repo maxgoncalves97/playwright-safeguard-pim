@@ -1,9 +1,9 @@
-import { test, expect } from '@playwright/test';
+import { test } from '@playwright/test';
 import { LoginOrangeHRM } from '../pages/login';
 
 test('Successful login', async ({ page }) => {
   const loginPage = new LoginOrangeHRM(page);
 
   await loginPage.loginHomepage(process.env.TEST_USERNAME!, process.env.TEST_PASSWORD!);
-  await loginPage.validLogin(process.env.TEST_DISPLAY_NAME!);
+  await loginPage.validLogin();
 });
