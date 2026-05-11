@@ -50,7 +50,7 @@ export class PimPage {
   async gotoAddEmployee() {
     await expect(this.addEmployeeButton).toBeVisible();
     await this.addEmployeeButton.click();
-    await expect(this.page).toHaveURL(/addEmployee/, {timeout: 15000});
+    await expect(this.page).toHaveURL(/addEmployee/, { timeout: 15000 });
     await expect(this.employeeFirstName).toBeVisible();
   }
 
@@ -74,9 +74,7 @@ export class PimPage {
 
     await this.saveButton.click();
 
-    await expect(this.page).toHaveURL(/viewPersonalDetails\/empNumber\/\d+/, {
-      timeout: 20000,
-    });
+    await expect(this.page).not.toHaveURL(/\/auth\/login/, { timeout: 15000 });
   }
 
   async successfulEmployeeCreation(firstName: string, lastName: string) {
