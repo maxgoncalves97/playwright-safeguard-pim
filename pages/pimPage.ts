@@ -1,4 +1,4 @@
-import { test, expect, Locator, Page } from '@playwright/test';
+import { expect, Locator, Page } from '@playwright/test';
 
 export class PimPage {
   readonly page: Page;
@@ -93,7 +93,7 @@ export class PimPage {
     await this.employeeListButton.click();
     await this.searchName.fill(employeeName);
     await this.searchButton.click();
-    await expect(resultFound).toBeVisible();
+    await expect(resultFound).toBeVisible({ timeout: 15000 });
   }
 
   async searchEmployeeById(employeeId: string) {

@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test } from '@playwright/test';
 import { LoginOrangeHRM } from '../pages/login';
 
 test('Invalid login - Username', async ({ page }) => {

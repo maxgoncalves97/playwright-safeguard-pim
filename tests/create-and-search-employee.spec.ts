@@ -16,10 +16,6 @@ test('Login and create an employee', async ({ page }) => {
     await PIMPage.gotoPIMPage();
     await PIMPage.gotoAddEmployee();
     await PIMPage.addEmployeeFullName(firstName, lastName);
-
-    const employeeId = await PIMPage.getEmployeeId();
-
-    await PIMPage.getEmployeeId();
     await PIMPage.saveCreatedEmployee();
     await PIMPage.successfulEmployeeCreation(firstName, lastName);
 });
@@ -28,7 +24,6 @@ test('Login and create an employee with no first name', async ({ page }) => {
     const loginPage = new LoginOrangeHRM(page);
     const PIMPage = new PimPage(page);
     const randomNumber = Math.floor(10000 + Math.random() * 90000);
-    const firstName = 'Max';
     const lastName = `SearchEmployee${randomNumber}`;
 
     await loginPage.loginHomepage(process.env.TEST_USERNAME!, process.env.TEST_PASSWORD!);
@@ -43,7 +38,6 @@ test('Login and create an employee with no first name', async ({ page }) => {
 test('Login and create an employee with no last name', async ({ page }) => {
     const loginPage = new LoginOrangeHRM(page);
     const PIMPage = new PimPage(page);
-    const randomNumber = Math.floor(10000 + Math.random() * 90000);
     const firstName = 'Max';
 
     await loginPage.loginHomepage(process.env.TEST_USERNAME!, process.env.TEST_PASSWORD!);
@@ -70,7 +64,6 @@ test('Login, create and search for an existing employee by name', async ({ page 
 
     const employeeId = await PIMPage.getEmployeeId();
 
-    await PIMPage.getEmployeeId();
     await PIMPage.saveCreatedEmployee();
     await PIMPage.successfulEmployeeCreation(firstName, lastName);
     await PIMPage.searchEmployeeByName(lastName);
@@ -92,7 +85,6 @@ test('Login and search for an existing employee by id', async ({ page }) => {
 
     const employeeId = await PIMPage.getEmployeeId();
 
-    await PIMPage.getEmployeeId();
     await PIMPage.saveCreatedEmployee();
     await PIMPage.successfulEmployeeCreation(firstName, lastName);
     await PIMPage.searchEmployeeById(employeeId);
