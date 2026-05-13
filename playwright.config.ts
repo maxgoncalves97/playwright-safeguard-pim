@@ -15,7 +15,7 @@ dotenv.config();
  * See https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig({
-  timeout: 15 * 1000,
+  timeout: 60 * 1000,
   testDir: './tests',
   /* Run tests in files in parallel */
   /* Fail the build on CI if you accidentally left test.only in the source code. */

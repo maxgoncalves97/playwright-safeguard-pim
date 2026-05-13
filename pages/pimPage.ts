@@ -91,6 +91,8 @@ export class PimPage {
     const resultFound = this.page.getByText(/1.*Record Found/i);
 
     await this.employeeListButton.click();
+    await expect(this.page).toHaveURL(/viewEmployeeList/, { timeout: 15000 });
+    await expect(this.searchButton).toBeVisible({ timeout: 15000 });
     await this.searchName.fill(employeeName);
     await this.searchButton.click();
     await expect(resultFound).toBeVisible({ timeout: 15000 });
@@ -101,6 +103,8 @@ export class PimPage {
     const employeeIdNumber = this.page.getByText(employeeId);
 
     await this.employeeListButton.click();
+    await expect(this.page).toHaveURL(/viewEmployeeList/, { timeout: 15000 });
+    await expect(this.searchButton).toBeVisible({ timeout: 15000 });
     await this.searchId.fill(employeeId);
     await this.searchButton.click();
     await expect(resultFound).toBeVisible({ timeout: 15000 });
